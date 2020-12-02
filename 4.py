@@ -1,7 +1,4 @@
 import sys
-from functools import reduce
-
-indata = [line.rstrip() for line in sys.stdin]
 
 
 def isValid(line):
@@ -13,7 +10,7 @@ def isValid(line):
 
 count = 0
 
-for line in indata:
+for line in sys.stdin.read().split('\n'):
     count += 1 if isValid(line) else 0
 
 print(count)
