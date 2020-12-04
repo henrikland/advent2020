@@ -15,18 +15,17 @@ def isValidHeight(height):
   if not match:
     return False
 
-  value = int(match.group(1))
-  unit = match.group(2)
+  (value, unit) = match.group(1, 2)
 
   if unit == "cm":
-    return value >= 150 and value <= 193
+    return 150 <= int(value) <= 193
 
-  return value >= 59 and value <= 76
+  return 59 <= int(value) <= 76
 
 rules = {
-  "byr": lambda b: int(b) >= 1920 and int(b) <= 2002,
-  "iyr": lambda y: int(y) >= 2010 and int(y) <= 2020,
-  "eyr": lambda y: int(y) >= 2020 and int(y) <= 2030,
+  "byr": lambda b: 1920 <= int(b) <= 2002,
+  "iyr": lambda y: 2010 <= int(y) <= 2020,
+  "eyr": lambda y: 2020 <= int(y) <= 2030,
   "hgt": lambda h: isValidHeight(h),
   "hcl": lambda h: hcl_rule_pattern.match(h),
   "ecl": lambda e: e in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
