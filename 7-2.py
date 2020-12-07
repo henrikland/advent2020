@@ -6,7 +6,7 @@ child_group_pattern = re.compile(r"(\d+) ([\w\s]+)")
 def parseRule(rule):
   cleaned_rule = re.sub(r"\sbags?\s?\.?|no other bags\.", "", rule)
   [node, contents] = cleaned_rule.split("contain ")
-  if len(contents) < 2:
+  if len(contents.strip()) == 0:
     return (node, None)
 
   children = []

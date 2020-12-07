@@ -4,7 +4,7 @@ import re
 def parseRule(rule):
   cleaned_rule = re.sub(r"( \d )|\sbags?\s?\.?|no other bags\.", "", rule)
   [node, children] = cleaned_rule.split("contain")
-  return (node, None if len(children) == 1 else children.split(","))
+  return (node, None if len(children.strip()) == 0 else children.split(","))
 
 nodes = {}
 
@@ -18,7 +18,7 @@ def findShinyGold(node):
 
   children = nodes[node]
 
-  if children == None:
+  if children is None:
     return 0
 
   return any(findShinyGold(child) for child in children)
