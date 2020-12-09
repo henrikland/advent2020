@@ -62,8 +62,9 @@ fn main() {
 
   let invalid_number = invalid_number.unwrap();
 
-  let mut terms = find_contiguous_sum(invalid_number, &numbers).unwrap();
-  terms.sort_unstable();
+  let terms = find_contiguous_sum(invalid_number, &numbers).unwrap();
+  let min = terms.iter().min().unwrap();
+  let max = terms.iter().max().unwrap();
 
-  println!("{}", terms[0] + terms[terms.len() - 1]);
+  println!("{}", min + max);
 }
