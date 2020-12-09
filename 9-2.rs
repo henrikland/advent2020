@@ -20,8 +20,8 @@ fn find_sum(target_sum: i64, numbers: &Vec<i64>, start: usize, end: usize) -> bo
   false
 }
 
-fn find_contiguous_sum(target_sum: i64, numbers: &Vec<i64>, start: usize, end: usize) -> Option<Vec<i64>> {
-  for (i, number) in numbers[start..end - 1].iter().enumerate() {
+fn find_contiguous_sum(target_sum: i64, numbers: &Vec<i64>) -> Option<Vec<i64>> {
+  for (i, number) in numbers.iter().enumerate() {
     let mut sum: i64 = *number;
     let mut j = i + 1;
 
@@ -61,12 +61,8 @@ fn main() {
   }
 
   let invalid_number = invalid_number.unwrap();
-  let invalid_number_index = numbers
-    .iter()
-    .position(|number| *number == invalid_number)
-    .unwrap();
 
-  let mut terms = find_contiguous_sum(invalid_number, &numbers, 0, invalid_number_index).unwrap();
+  let mut terms = find_contiguous_sum(invalid_number, &numbers).unwrap();
   terms.sort_unstable();
 
   println!("{}", terms[0] + terms[terms.len() - 1]);
