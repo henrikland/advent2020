@@ -32,9 +32,10 @@ def get_mask_variations(mask):
 
 
 def write_with_mask(memory, mask, address, value):
-    floating_bits_only = mask.replace("1", "0")
-    clear = ~int(floating_bits_only.replace("X", "1"), 2)
-    cleared_address = address & clear
+    # We set the zeroes in the mask to ones and the floating bits to zeroes...
+    clear_mask = mask.replace("0", "1").replace("X", "0")
+    # ...then use that to remove the floating bits from the address since they don't matter
+    cleared_address = address & int(clear_mask, 2)
 
     mask_variations = get_mask_variations(mask)
 
