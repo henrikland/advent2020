@@ -61,11 +61,8 @@ def is_ticket_valid(ticket, ranges):
 sections = sys.stdin.read().split("\n\n")
 
 ranges = parse_ranges(sections[0])
+your_ticket = parse_your_ticket(sections[1])
 nearby_tickets = parse_nearby_tickets(sections[2])
-
-# print("ranges", parse_ranges(sections[0]))
-# print("your", parse_your_ticket(sections[1]))
-# print("nearby", parse_nearby_tickets(sections[2]))
 
 valid_tickets = list(
     filter(
@@ -81,7 +78,27 @@ fields_for_index = list(zip(*valid_tickets))
 for i_r, range_pair in enumerate(ranges):
     for i_v, fields in enumerate(fields_for_index):
         if all(in_range(field, range_pair) for field in fields):
-            correct_fields[i_r].append(i_v)
+            correct_fields[i_v].append(i_r)
 
 
-print("correct", correct_fields)
+singles = [None for _ in valid_tickets[0]]
+
+while any(s is None for s in singles):
+    for i, field in enumerate(correct_fields):
+        if len(field) == 1:
+            singles[i] = (i, field)
+
+    for s in filter(lambda s: s is not None, singles):
+        (index, r) = s
+
+        for j, f in enumerate(correct_fields):
+            if j != index and r[0] in f:
+                f.remove(r[0])
+
+product = 1
+
+for i, c in enumerate(correct_fields):
+    if 0 <= c[0] <= 5:
+        product *= your_ticket[i]
+
+print(product)
